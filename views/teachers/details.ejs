@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<h1><%= teacher.name %></h1>
+
+<div class="details-card">
+    <p><strong>Email:</strong> <%= teacher.email %></p>
+    <p><strong>Кафедра:</strong> <%= teacher.department %></p>
+    <p><strong>Учёная степень:</strong> <%= teacher.academicDegree %></p>
+    <p><strong>Количество курсов:</strong> <%= teacher.courses ? teacher.courses.length : 0 %></p>
+</div>
+
+<% if (teacher.courses && teacher.courses.length > 0) { %>
+    <h2>Курсы преподавателя</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Кредиты</th>
+                <th>Семестр</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% teacher.courses.forEach(course => { %>
+                <tr>
+                    <td><%= course.title %></td>
+                    <td><%= course.credits %></td>
+                    <td><%= course.semester %></td>
+                    <td><a href="/courses/<%= course.id %>" class="btn btn-view">Просмотр</a></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } %>
+
+<div class="actions-bottom">
+    <a href="/teachers/<%= teacher.id %>/edit" class="btn btn-edit">Редактировать</a>
+    <a href="/teachers" class="btn btn-back">Назад к списку</a>
+</div>
+
+<%- include('../partials/footer') %>

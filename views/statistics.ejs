@@ -1,0 +1,69 @@
+<%- include('partials/header') %>
+
+<h1>Статистика</h1>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Преподаватели</h3>
+        <p class="stat-number"><%= totalTeachers %></p>
+    </div>
+    <div class="stat-card">
+        <h3>Курсы</h3>
+        <p class="stat-number"><%= totalCourses %></p>
+    </div>
+</div>
+
+<% if (topTeacher) { %>
+    <div class="details-card">
+        <h2>Преподаватель с наибольшим количеством курсов</h2>
+        <p><strong><%= topTeacher.name %></strong> — <%= maxCourses %> курс(ов)</p>
+    </div>
+<% } %>
+
+<h2>Курсы по семестрам</h2>
+<% if (semesterStats.length > 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Семестр</th>
+                <th>Количество курсов</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% semesterStats.forEach(stat => { %>
+                <tr>
+                    <td><%= stat.semester %></td>
+                    <td><%= stat.count %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } else { %>
+    <p class="empty-state">Данные отсутствуют</p>
+<% } %>
+
+<h2>Курсы по преподавателям</h2>
+<% if (teacherStats.length > 0) { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Преподаватель</th>
+                <th>Кафедра</th>
+                <th>Количество курсов</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% teacherStats.forEach(t => { %>
+                <tr>
+                    <td><a href="/teachers/<%= t.id %>"><%= t.name %></a></td>
+                    <td><%= t.department %></td>
+                    <td><%= t.courses ? t.courses.length : 0 %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+<% } else { %>
+    <p class="empty-state">Данные отсутствуют</p>
+<% } %>
+
+<%- include('partials/footer') %>
